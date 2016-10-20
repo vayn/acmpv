@@ -81,7 +81,7 @@ def main():
     if args.info:
         cmd.extend(["-i", url])
     else:
-        cmd.extend(["-p", mpv, url])
+        cmd.extend(["-dp", mpv, url])
         if args.format:
             cmd.insert(1, "--format=%s" % args.format)
 
