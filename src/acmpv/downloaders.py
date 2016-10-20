@@ -101,4 +101,3 @@ class BiliAssDownloader(AssDownloader):
         ass = self._get_ass(comment, comment_format="Bilibili")
 
         return [title, ass]
-
