@@ -63,6 +63,10 @@ $ acmpv --format=mp4 http://www.acfun.tv/v/ac3171529
 $ acmpv -i http://www.bilibili.com/video/av6624924/
 ```
 
+### 注意事项
+
+1. 受 [You-Get](https://github.com/soimort/you-get) 本身所限，只能播放 Bilibili 的普通视频，不能播放番剧
+
 ## 鸣谢
 
  * [You-Get](https://github.com/soimort/you-get)
