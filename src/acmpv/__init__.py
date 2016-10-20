@@ -7,7 +7,7 @@ else:
     pass
 
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 __title__ = "acmpv"
 __description__ = "Play Acfun video with danmaku in mpv media player"
@@ -18,4 +18,4 @@ __author__ = "Vayn a.k.a VT"
 __email__ = "vayn@vayn.de"
 
 __license__ = "WTFPL 2"
-__copyright__ = "Copyright (c) 2015 Vayn a.k.a VT"
+__copyright__ = "Copyright (c) 2016 Vayn a.k.a VT"

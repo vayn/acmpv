@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import logging
-
-from .ass_downloader import AcfunAssDownloader
+from . import downloaders as DS
 
 
 def main():
@@ -17,7 +16,7 @@ def main():
     args = parser.parse_args()
 
     url = args.url
-    title, ass = AcfunAssDownloader(url).download()
+    title, ass = DS.AcfunAssDownloader(url).download()
 
     rootpath = os.path.dirname(os.path.realpath(__file__))
     make_path = lambda f: os.path.join(rootpath, f)

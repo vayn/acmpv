@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 import io
+import re
 import math
 import tempfile
 import tkinter as tk
 
 from . import danmaku2ass
-from .you_get.common import get_html, r1
+from .you_get.common import get_content, r1, r1_of
+from .you_get.util.strings import get_filename
 from .you_get.extractors import acfun, bilibili
+
 
 
 class AssDownloader:
@@ -53,6 +56,7 @@ class AssDownloader:
 
 
 class AcfunAssDownloader(AssDownloader):
+    """ASS downloader for Acfun"""
     def __init__(self, url):
         super().__init__()
         self.url = url
@@ -64,6 +68,38 @@ class AcfunAssDownloader(AssDownloader):
 
         comment = acfun.get_srt_json(vid)
         ass = self._get_ass(comment, comment_format="Acfun")
+
+        return [title, ass]
+
+
+class BiliAssDownloader(AssDownloader):
+    """ASS downloader for Bilibili"""
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+    def download(self):
+        html = get_content(self.url)
+
+        if re.match(r'https?://bangumi\.bilibili\.com/', self.url):
+            # quick hack for bangumi URLs
+            self.url = r1(r'"([^"]+)" class="v-av-link"', html)
+            html = get_content(self.url)
+
+        title = r1_of([r'<meta name="title" content="\s*([^<>]{1,999})\s*" />',
+                       r'<h1[^>]*>\s*([^<>]+)\s*</h1>'], html)
+        if title:
+            title = get_filename(title)
+
+        flashvars = r1_of([r'(cid=\d+)', r'(cid: \d+)', r'flashvars="([^"]+)"',
+                           r'"https://[a-z]+\.bilibili\.com/secure,(cid=\d+)(?:&aid=\d+)?"'], html)
+        assert flashvars
+        flashvars = flashvars.replace(': ', '=')
+        t, cid = flashvars.split('=', 1)
+        cid = cid.split('&')[0]
+
+        comment = bilibili.get_srt_xml(cid)
+        ass = self._get_ass(comment, comment_format="Bilibili")
 
         return [title, ass]
 
