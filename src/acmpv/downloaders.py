@@ -61,7 +61,7 @@ class AcfunAssDownloader(AssDownloader):
         self.url = url
 
     def download(self):
-        html = get_html(self.url)
+        html = get_content(self.url)
         title = r1(r'data-title="([^"]+)"', html)
         vid = r1('data-vid="(\d+)"', html)
 
@@ -80,7 +80,7 @@ class BiliAssDownloader(AssDownloader):
     def download(self):
         html = get_content(self.url)
 
-        if re.match(r'https?://bangumi\.bilibili\.com/', self.url):
+        if re.match(r'https?://bangumi\.bilibili\.com/anime/v/', self.url):
             # quick hack for bangumi URLs
             self.url = r1(r'"([^"]+)" class="v-av-link"', html)
             html = get_content(self.url)
