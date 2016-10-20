@@ -2,9 +2,13 @@
 
 **Acfun + mpv + danmaku**
 
-使用 mpv 播放带弹幕的 Acfun 视频
+~~使用 mpv 播放带弹幕的 Acfun 视频~~
+使用 mpv 播放「带弹幕的 Acfun & Bilibili 视频」& [其他网站视频](https://github.com/soimort/you-get#supported-sites)
 
-## 安装
+__辅助工具__
+[macOS] [acmpv watcher](https://github.com/Vayn/acmpv) - 监控剪贴板自动调用 acmpv 播放视频
+
+## 安装&升级
 
 ### 必要条件
 
@@ -23,6 +27,12 @@ $ git clone git://github.com/Vayn/acmpv.git
 
 ```
 $ ln -s "$(pwd)/acmpv" /usr/local/bin
+```
+
+### 升级
+
+```
+$ git pull origin master
 ```
 
 ## 使用方法
@@ -48,7 +58,7 @@ $ acmpv --format=mp4 http://www.acfun.tv/v/ac3171529
 只查看视频信息，不播放视频：
 
 ```
-$ acmpv -i http://www.acfun.tv/v/ac3171529
+$ acmpv -i http://www.bilibili.com/video/av6624924/
 ```
 
 ## 鸣谢
