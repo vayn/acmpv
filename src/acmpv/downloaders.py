@@ -11,7 +11,6 @@ from .you_get.util.strings import get_filename
 from .you_get.extractors import acfun, bilibili
 
 
-
 class AssDownloader:
     def __init__(self):
         self.screen_width = 0
