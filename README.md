@@ -60,7 +60,8 @@ $ acmpv --format=mp4 http://www.acfun.tv/v/ac3171529
 只查看视频信息，不播放视频：
 
 ```
-$ acmpv -i http://www.bilibili.com/video/av6624924/
+$ acmpv -i http://www.acfun.tv/v/ac3171529
+
 ```
 
 ### 注意事项
