@@ -8,7 +8,6 @@ import tkinter as tk
 from . import danmaku2ass
 from .you_get.common import get_content, r1, r1_of
 from .you_get.util.strings import get_filename
-from .you_get.extractors import acfun, bilibili
 
 
 class AssDownloader:
@@ -60,12 +59,17 @@ class AcfunAssDownloader(AssDownloader):
         super().__init__()
         self.url = url
 
+    @staticmethod
+    def _get_srt_json(id):
+        url = 'http://danmu.aixifan.com/V2/%s' % id
+        return get_content(url)
+
     def download(self):
         html = get_content(self.url)
         title = r1(r'data-title="([^"]+)"', html)
         vid = r1('data-vid="(\d+)"', html)
 
-        comment = acfun.get_srt_json(vid)
+        comment = self._get_srt_json(vid)
         ass = self._get_ass(comment, comment_format="Acfun")
 
         return [title, ass]
@@ -76,6 +80,11 @@ class BiliAssDownloader(AssDownloader):
     def __init__(self, url):
         super().__init__()
         self.url = url
+
+    @staticmethod
+    def _get_srt_xml(id):
+        url = 'http://comment.bilibili.com/%s.xml' % id
+        return get_content(url)
 
     def download(self):
         html = get_content(self.url)
@@ -97,7 +106,7 @@ class BiliAssDownloader(AssDownloader):
         t, cid = flashvars.split('=', 1)
         cid = cid.split('&')[0]
 
-        comment = bilibili.get_srt_xml(cid)
+        comment = self._get_srt_xml(cid)
         ass = self._get_ass(comment, comment_format="Bilibili")
 
         return [title, ass]
