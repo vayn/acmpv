@@ -66,7 +66,7 @@ $ acmpv -i http://www.acfun.tv/v/ac3171529
 
 ### 注意事项
 
-1. ~~受 [You-Get](https://github.com/soimort/you-get) 本身所限，只能播放 Bilibili 的普通视频，不能播放番剧~~
+1. 受 [You-Get](https://github.com/soimort/you-get) 本身所限，只能播放 Bilibili 的普通视频，不能播放番剧
 
 ## 鸣谢
 

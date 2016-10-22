@@ -27,8 +27,8 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="视频网址")
-    parser.add_argument("-f", "--format", dest="format", help="指定视频格式（不支持B站）")
-    parser.add_argument("-i", "--info", action="store_true", help="查看视频信息（不支持B站）")
+    parser.add_argument("-f", "--format", dest="format", help="指定视频格式")
+    parser.add_argument("-i", "--info", action="store_true", help="查看视频信息")
     args = parser.parse_args()
 
     rootpath = os.path.dirname(os.path.realpath(__file__))
@@ -42,29 +42,29 @@ def main():
     ass = ''
     cmd = []
 
-    if domain in dansites['b']:
-        cmd = ['python3', make_path('bilidan.py'), url]
+    if domain in dansites['a']:
+        downloader = DS.AcfunAssDownloader(url)
+        title, ass = downloader.download()
+    elif domain in dansites['b']:
+        downloader = DS.BiliAssDownloader(url)
+        title, ass = downloader.download()
+
+    mpv = [make_path('mpv.sh'), '--force-media-title', title.replace(' ', '_')]
+    mpv += ['--merge-files', '--no-video-aspect']
+
+    if len(ass) > 0:
+        mpv += ['--sub-ass', '--sub-file', ass]
+
+    mpv += ['--']
+    mpv = ' '.join(mpv)
+
+    cmd = [make_path("you-get")]
+    if args.info:
+        cmd.extend(["-i", url])
     else:
-        if domain in dansites['a']:
-            downloader = DS.AcfunAssDownloader(url)
-            title, ass = downloader.download()
-
-        mpv = [make_path('mpv.sh'), '--force-media-title', title.replace(' ', '_')]
-        mpv += ['--merge-files', '--no-video-aspect']
-
-        if len(ass) > 0:
-            mpv += ['--sub-ass', '--sub-file', ass]
-
-        mpv += ['--']
-        mpv = ' '.join(mpv)
-
-        cmd = [make_path("you-get")]
-        if args.info:
-            cmd.extend(["-i", url])
-        else:
-            cmd.extend(["-p", mpv, url])
-            if args.format:
-                cmd.insert(1, "--format=%s" % args.format)
+        cmd.extend(["-p", mpv, url])
+        if args.format:
+            cmd.insert(1, "--format=%s" % args.format)
 
     player_process = subprocess.Popen(cmd)
     try:
